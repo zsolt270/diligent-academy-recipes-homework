@@ -1,1 +1,3 @@
-base: "/diligent-academy-recipes-homework/";
+export default defineConfig({
+	base: "/diligent-academy-recipes-homework/",
+});
