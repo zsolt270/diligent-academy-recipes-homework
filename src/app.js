@@ -52,57 +52,65 @@ export function setupApp(root) {
 	return root;
 }
 
+// this function makes the cards for each recipe
 const makeRecipeCards = () => {
 	const cards = getRecipes().map((recipe) => {
-		return element(
-			"div",
-			{ class: "card col mt-3 px-0", style: "width:18rem" },
-			[
-				element("div", { class: "card-header text-center" }, [
-					element("h3", {}, [recipe.name]),
-				]),
-				element("div", { class: "card-body" }, [
-					element("div", { class: "row" }, [
-						element("div", { class: "col" }, [`Serving: ${recipe.servings}`]),
-					]),
-					element("div", { class: "row" }, [
-						element("div", { class: "col" }, [
-							`Preparation time: ${recipe.preparation_time}`,
-						]),
-					]),
-					element("h4", { class: "mt-2" }, ["Ingredients"]),
-					createIngredientList(recipe.ingredients),
-					element("h4", { class: "mt-2" }, ["Instructions"]),
-					element("ul", {}, [
-						element("li", {}, ["valami1"]),
-						element("li", {}, ["valami2"]),
-						element("li", {}, ["valami3"]),
-						element("li", {}, ["valami4"]),
+		return element("div", { class: "card col mt-3 px-0" }, [
+			element("div", { class: "card-header text-center" }, [
+				element("h3", {}, [recipe.name]),
+			]),
+			element("div", { class: "card-body" }, [
+				element("div", { class: "row" }, [
+					element("div", {}, [
+						element("span", { class: "fw-bold" }, ["Serving: "]),
+						element("span", {}, [`${recipe.servings}`]),
 					]),
 				]),
-			]
-		);
+				element("div", { class: "row" }, [
+					element("div", {}, [
+						element("span", { class: "fw-bold" }, ["Preparation time: "]),
+						element("span", {}, [`${recipe.preparation_time}`]),
+					]),
+				]),
+				element("h4", { class: "mt-2" }, ["Ingredients"]),
+				createLists(recipe.ingredients, "ingredients"),
+				element("h4", { class: "mt-2" }, ["Instructions"]),
+				createLists(recipe.instructions, "Instructions"),
+			]),
+		]);
 	});
 	return cards;
 };
 
-// this function creates the ingredients list
-const createIngredientList = (ingredients) => {
-	//here the function creates an array with the items of the ingredients list
-	const ingredientListItems = ingredients.map((ingredient) => {
-		return element("li", {}, [ingredient.item, " | ", ingredient.quantity]);
-	});
+// this function creates the lists
+const createLists = (inputArray, typeOfArray) => {
+	let resultListItems;
+
+	// checks which list do we want to make. The only difference is in the output formatting.
+	if (typeOfArray === "ingredients") {
+		//here the function creates an array with the items of the ingredients list
+		resultListItems = inputArray.map((inputArrayItem) => {
+			return element("li", {}, [
+				inputArrayItem.item,
+				" | ",
+				inputArrayItem.quantity,
+			]);
+		});
+	} else {
+		// here the function creates an array with the items of the instructions list
+		resultListItems = inputArray.map((inputArrayItem) => {
+			return element("li", {}, [inputArrayItem]);
+		});
+	}
 
 	//here i create the root element of the list
-	const ingredientList = element("ul", { style: "min-height: 12rem" }, []);
+	const resultList = element("ul", { style: "min-height: 12rem" }, []);
 
 	//here i go through the list items array and for every item I append it to the root of the list
-	ingredientListItems.forEach((item) => {
-		ingredientList.appendChild(item);
+	resultListItems.forEach((item) => {
+		resultList.appendChild(item);
 	});
 
 	//returning the created list
-	return ingredientList;
+	return resultList;
 };
-
-const createInstructionList = () => {};
