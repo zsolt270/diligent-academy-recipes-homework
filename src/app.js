@@ -39,7 +39,7 @@ export function setupApp(root) {
 	function handleShow(event) {
 		isVisible = !isVisible;
 		const list = event.target.parentNode.querySelector("#recipeList");
-		list.classList.add("row", "gap-5");
+		list.classList.add("row", "gap-4");
 
 		if (isVisible) {
 			makeRecipeCards().forEach((card) => list?.appendChild(card));
@@ -51,13 +51,13 @@ export function setupApp(root) {
 	root.appendChild(createContainer({ onShow: handleShow }));
 	return root;
 }
-
+// , style: "max-width:18rem"
 // this function makes the cards for each recipe
 const makeRecipeCards = () => {
 	const cards = getRecipes().map((recipe) => {
-		return element("div", { class: "card col mt-3 px-0" }, [
+		return element("div", { class: "card col-12 col-lg mt-3 px-0" }, [
 			element("div", { class: "card-header text-center" }, [
-				element("h3", {}, [recipe.name]),
+				element("h4", {}, [recipe.name]),
 			]),
 			element("div", { class: "card-body" }, [
 				element("div", { class: "row" }, [
@@ -72,9 +72,9 @@ const makeRecipeCards = () => {
 						element("span", {}, [`${recipe.preparation_time}`]),
 					]),
 				]),
-				element("h4", { class: "mt-2" }, ["Ingredients"]),
+				element("h5", { class: "mt-2" }, ["Ingredients"]),
 				createLists(recipe.ingredients, "ingredients"),
-				element("h4", { class: "mt-2" }, ["Instructions"]),
+				element("h5", { class: "mt-2" }, ["Instructions"]),
 				createLists(recipe.instructions, "Instructions"),
 			]),
 		]);
