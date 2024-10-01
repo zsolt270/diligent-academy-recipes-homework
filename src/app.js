@@ -51,7 +51,7 @@ export function setupApp(root) {
 	root.appendChild(createContainer({ onShow: handleShow }));
 	return root;
 }
-// , style: "max-width:18rem"
+
 // this function makes the cards for each recipe
 const makeRecipeCards = () => {
 	const cards = getRecipes().map((recipe) => {
